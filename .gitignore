@@ -1,0 +1,16 @@
+# boardctl 运行产物
+.boardctl/
+evidence.jsonl
+claims.jsonl
+captures/
+build/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 编辑器 / 系统
+.DS_Store
+Thumbs.db
