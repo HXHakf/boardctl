@@ -1,5 +1,7 @@
 # boardctl
 
+[![ci](https://github.com/HXHakf/boardctl/actions/workflows/ci.yml/badge.svg)](https://github.com/HXHakf/boardctl/actions/workflows/ci.yml)
+
 > 给嵌入式 AI 代理装一条**证据链**：AI 说"跑通了"，要能指到一行可追溯的记录。
 
 单文件、零依赖（Python 标准库），适配 ESP-IDF，Windows / macOS / Linux 都能跑。
