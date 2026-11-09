@@ -67,6 +67,34 @@ SKIP_DIRS = {"build", ".git", ".boardctl", "managed_components", "out", "__pycac
 
 # ---------------------------------------------------------------- 基础工具
 
+def _force_utf8() -> None:
+    """让 stdout/stderr 能表示中文。
+
+    非中文 Windows 的控制台编码是 cp1252 之类，`print` 中文会抛
+    UnicodeEncodeError 直接崩掉。这里先探测：原编码能表示中文就不动
+    （避免中文 Windows 上变成乱码），不能就切 UTF-8，再不行至少不抛异常。
+    """
+    for stream in (sys.stdout, sys.stderr):
+        if stream is None:
+            continue
+        enc = getattr(stream, "encoding", None) or "utf-8"
+        try:
+            "中文".encode(enc)
+            continue
+        except (UnicodeEncodeError, LookupError):
+            pass
+        try:
+            stream.reconfigure(encoding="utf-8")
+        except Exception:  # noqa: BLE001
+            try:
+                stream.reconfigure(errors="replace")
+            except Exception:  # noqa: BLE001
+                pass
+
+
+_force_utf8()
+
+
 def now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
